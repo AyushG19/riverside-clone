@@ -19,7 +19,7 @@ const ThemeImage = (props: Props) => {
 
 export default function Home() {
   return (
-    <div className="bg-black w-100 h-100 ">
+    <div className="bg-gray-900 w-100 h-100 ">
 
     </div>
   );
