@@ -8,7 +8,9 @@
   },
   "scripts": {
     "check-types": "tsc --noEmit",
-    "lint": "eslint src/"
+    "lint": "eslint src/",
+    "build":"tsc",
+    "generate":"prisma generate"
   },
   "devDependencies": {
     "@repo/typescript-config": "workspace:*",

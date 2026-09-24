@@ -2,10 +2,12 @@ import { DefaultEventsMap, Server, Socket, } from "socket.io";
 import { RoomManager } from "./managers/room.manager";
 import express from 'express'
 import http from "http"
+import { roomRouter } from "./routes";
 const app = express()
 
 const server = http.createServer(app);
 // const server = http.createServer()
+app.use(roomRouter);
 const io = new Server(server,{cors:{origin:"*"}})
 const roomManager = new RoomManager();
 

@@ -1337,6 +1337,7 @@ export type VerificationScalarFieldEnum = (typeof VerificationScalarFieldEnum)[k
 
 export const RoomScalarFieldEnum = {
   id: 'id',
+  code: 'code',
   name: 'name',
   owner_id: 'owner_id'
 } as const

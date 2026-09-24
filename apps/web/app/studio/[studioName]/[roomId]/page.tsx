@@ -280,7 +280,7 @@ export default function Studio() {
     streamCamera,
     streamScreen,
     initRecorder,
-    recorderRef,
+    stopRecording,
     startNewRecording,
   } = useMedia();
 
@@ -323,12 +323,12 @@ export default function Studio() {
     if (!rec) setT(0);
     if (rec) {
       setRec(false);
-      recorderRef.current?.stop();
+      stopRecording()
     } else {
       setRec(true);
       if (!localStreamRef.current) return;
       await initRecorder(localStreamRef.current);
-      console.log("recorder", recorderRef.current);
+      // console.log("recorder", recorderRef.current);
       startNewRecording();
     }
     say(rec ? "Recording saved" : "Recording started");

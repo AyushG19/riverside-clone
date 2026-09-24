@@ -5,7 +5,7 @@ export default function useMedia() {
   const recorderRef = useRef<MediaRecorder | null>(null);
   const dbRef = useRef<IDBPDatabase<unknown> | null>(null);
   const chunkIndexRef = useRef<number>(0);
-  const recordingIdRef = useRef<string|null>(null);
+  const recordingIdRef = useRef<string | null>(null);
 
   const createDb = async () => {
     const db = await openDB("oceanside", 3, {
@@ -39,6 +39,14 @@ export default function useMedia() {
     });
     recorderRef.current.start(interval);
   };
+
+  const stopRecording = () => {
+    if (!recorderRef.current) {
+      console.error("No recorder instance");
+      return;
+    }
+    recorderRef.current.stop();
+  };
   const streamScreen = async () => {
     const screenMedia = await navigator.mediaDevices.getDisplayMedia({
       video: true,
@@ -61,19 +69,23 @@ export default function useMedia() {
       console.log("NO dbref");
       return;
     }
-    recorderRef.current = new MediaRecorder(stream);
+
+    const mimeType = MediaRecorder.isTypeSupported("video/webm;codecs=vp9,opus")
+      ? "video/webm;codecs=vp9,opus"
+      : "video/webm";
+    recorderRef.current = new MediaRecorder(stream, { mimeType });
     recorderRef.current.ondataavailable = async (event) => {
       console.log("data avaialble");
       if (dbRef.current) {
         console.log("setting chunks in db");
         const chunkId = chunkIndexRef.current++;
         const recId = recordingIdRef.current;
-        if(!recId) console.error("start recofing again")
+        if (!recId) console.error("start recofing again");
         await dbRef.current.put("recording-chunks", {
           id: `${recId}-${chunkId}`,
-          recordingId:recId,
+          recordingId: recId,
           blob: event.data,
-          createdAt:Date.now()
+          createdAt: Date.now(),
         });
       }
     };
@@ -97,6 +109,7 @@ export default function useMedia() {
     streamCamera,
     initRecorder,
     recorderRef,
+    stopRecording,
     startNewRecording,
   };
 }
