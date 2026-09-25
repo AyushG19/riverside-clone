@@ -20,7 +20,7 @@ export const validateJoinLink = async (req: Request, res: Response) => {
 export const createRoom = async (req: Request, res: Response) => {
   try {
     const code = generateCode();
-    res.sendStatus(200).json({message:"Code generation successful",code})
+    res.status(200).json({message:"Code generation successful",code})
   } catch (error: unknown) {
 	console.error(error);
   }

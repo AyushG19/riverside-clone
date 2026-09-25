@@ -1,10 +1,10 @@
-import { Prisma, prismaClient } from "./prisma";
+import { prisma } from "./prisma";
 
 type IsValidRoom = {
   isValid: boolean;
 };
 export const fetchRoom = async (code: string): Promise<IsValidRoom> => {
-  const res = await prismaClient.room.findUnique({
+  const res = await prisma.room.findUnique({
     where: {
       code,
     },

@@ -7,7 +7,7 @@ const app = express()
 
 const server = http.createServer(app);
 // const server = http.createServer()
-app.use(roomRouter);
+app.use("/room",roomRouter);
 const io = new Server(server,{cors:{origin:"*"}})
 const roomManager = new RoomManager();
 
